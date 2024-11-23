@@ -140,6 +140,55 @@ public class HelloWorldTest {
 
         }
     }
+    @Test
+    public void testWithPassword() {
+        String[] password =
+                {"123456", "123456789", "qwerty", "password", "1234567",
+                        "12345678", "12345", "iloveyou", "111111", "123123",
+                        "abc123", "qwerty123", "1q2w3e4r", "admin", "qwertyuiop",
+                        "654321", "555555", "lovely", "7777777", "welcome",
+                        "888888", "princess", "dragon", "password1", "123qwe"
+                };
+        int i = 0;
+        String outText;
+        boolean res;
+
+        do {
+            Map<String, String> params = new HashMap<>();
+            params.put("login", "super_admin");
+            params.put("password", password[i]);
+
+            Response response = RestAssured
+                    .given()
+                    .body(params)
+                    .when()
+                    .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
+                    .andReturn();
+
+            String responseCookie =response.getCookie("auth_cookie");
+
+            Map<String,String> cookies =new HashMap<>();
+            cookies.put("auth_cookie", responseCookie);
+
+
+            Response responseForCheck =RestAssured
+                    .given()
+                    //.body(params)
+                    .cookies(cookies)
+                    .when()
+                    .post("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
+                    .andReturn();
+
+            outText = responseForCheck.print();
+            res = (Objects.equals(outText, "You are NOT authorized"));
+
+            i = i+1;
+        } while ((i < (password.length -1)) &res);
+
+        System.out.println("\n_____Results:_____");
+        System.out.println("Correct password:"+password[i-1]);
+        System.out.println(outText);
+    }
 
 }
 
