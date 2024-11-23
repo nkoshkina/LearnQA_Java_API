@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HelloWorldTest {
     @Test
@@ -80,6 +81,64 @@ public class HelloWorldTest {
             statusCode = response.getStatusCode();
             System.out.println(statusCode);
         } while (statusCode != 200);
+    }
+
+    @Test
+    public void testWithToken() {
+
+        JsonPath response = RestAssured
+                //.given()
+                //.when()
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+
+        String token = response.get("token");
+        //System.out.println(token);
+        int seconds  = response.get("seconds");
+        //System.out.println(seconds);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("token", token);
+
+        response = RestAssured
+                .given()
+                .queryParams(params)
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+
+        String status = response.get("status");
+        if (Objects.equals(status, "Job is NOT ready")) {
+            System.out.println("Status has correct value: " + status);
+        } else {
+            System.out.println("Status has wrong value: " + status);
+        };
+
+        try {
+            Thread.sleep(seconds* 1000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            response = RestAssured
+                    .given()
+                    .queryParams(params)
+                    .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                    .jsonPath();
+
+            status = response.get("status");
+            String result = response.get("result");
+
+            if (Objects.equals(status, "Job is ready")) {
+                System.out.println("Status has correct value: " + status);
+            } else {
+                System.out.println("Status has wrong value: " + status);
+            };
+            if (result == null){
+                System.out.println("Result is not defined");
+            } else {
+                System.out.println("Result has correct value: " + result);
+            };
+
+        }
     }
 
 }
