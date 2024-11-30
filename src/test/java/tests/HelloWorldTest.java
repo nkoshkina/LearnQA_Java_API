@@ -1,13 +1,26 @@
+package tests;
+
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class HelloWorldTestFirst {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class HelloWorldTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"", "Hello, world", "Hello from Nadezhda"})
+    public void testStringLength(String str) {
+
+        assertTrue(str.length() >15, "Length <= 15");
+    }
+
     @Test
     public void testHelloWorld() {
 
@@ -94,7 +107,7 @@ public class HelloWorldTestFirst {
 
         String token = response.get("token");
         //System.out.println(token);
-        int seconds  = response.get("seconds");
+        int seconds = response.get("seconds");
         //System.out.println(seconds);
 
         Map<String, String> params = new HashMap<>();
@@ -111,10 +124,11 @@ public class HelloWorldTestFirst {
             System.out.println("Status has correct value: " + status);
         } else {
             System.out.println("Status has wrong value: " + status);
-        };
+        }
+        ;
 
         try {
-            Thread.sleep(seconds* 1000L);
+            Thread.sleep(seconds * 1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
@@ -131,12 +145,14 @@ public class HelloWorldTestFirst {
                 System.out.println("Status has correct value: " + status);
             } else {
                 System.out.println("Status has wrong value: " + status);
-            };
-            if (result == null){
+            }
+            ;
+            if (result == null) {
                 System.out.println("Result is not defined");
             } else {
                 System.out.println("Result has correct value: " + result);
-            };
+            }
+            ;
 
         }
     }
@@ -190,5 +206,5 @@ public class HelloWorldTestFirst {
         System.out.println(outText);
     }
 
-}
 
+}
