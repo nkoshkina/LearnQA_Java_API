@@ -56,6 +56,21 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
+    @Step("Make a GET-request with header and  cookie")
+    public Response makeGetRequestWithHeaderCookie(String url, String header, String cookie){
+        return given()
+                .filter(new AllureRestAssured())
+                .header("x-csrf-token", header)
+                .cookie("auth_sid", cookie)
+                .get(url)
+                .andReturn();
+    }
 
-
+    @Step("Make a GET-request without parameters")
+    public Response makeGetRequestWoParams(String url){
+        return given()
+                .filter(new AllureRestAssured())
+                .get(url)
+                .andReturn();
+    }
 }
