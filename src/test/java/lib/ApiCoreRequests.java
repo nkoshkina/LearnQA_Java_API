@@ -3,6 +3,7 @@ package lib;
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.Header;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -62,6 +63,35 @@ public class ApiCoreRequests {
                 .filter(new AllureRestAssured())
                 .body(authData)
                 .post(url)
+                .andReturn();
+    }
+
+    @Step("Make a POST-request with Body parameters and JSON response")
+    public JsonPath makePostRequestJsonResponse(String url, Map<String, String> authData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(authData)
+                .post(url)
+                .jsonPath();
+    }
+
+    @Step("Make a PUT-request with header and cookie")
+    public Response makePutRequestWithHeaderCookie(String url, Map<String, String> editData,String header, String cookie){
+        return given()
+                .filter(new AllureRestAssured())
+                .header("x-csrf-token", header)
+                .cookie("auth_sid", cookie)
+                .body(editData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step("Make a PUT-request without header and cookie")
+    public Response makePutRequestWoHeaderCookie(String url, Map<String, String> editData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(editData)
+                .put(url)
                 .andReturn();
     }
 }
