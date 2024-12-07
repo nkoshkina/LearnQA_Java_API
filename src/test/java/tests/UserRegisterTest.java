@@ -33,7 +33,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
             Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
             Assertions.assertResponseTextEquals(responseCreateAuth, "Users with email '" + email+ "' already exists");
@@ -49,7 +49,7 @@ public class UserRegisterTest extends BaseTestCase {
         Map<String, String> userData = DataGenerator.getRegistrationData();
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 200);
         Assertions.assertJsonHasField(responseCreateAuth, "id");
@@ -68,7 +68,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "Invalid email format");
@@ -88,7 +88,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of '" + key + "' field is too short");
@@ -108,7 +108,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData = DataGenerator.getRegistrationData(userData);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The value of '" + key + "' field is too long");
@@ -126,7 +126,7 @@ public class UserRegisterTest extends BaseTestCase {
         userData.remove(key);
 
         Response responseCreateAuth = apiCoreRequests
-                .makePostRequestCreateUser(baseUrl, userData);
+                .makePostRequest(baseUrl, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateAuth, 400);
         Assertions.assertResponseTextEquals(responseCreateAuth, "The following required params are missed: " +key);

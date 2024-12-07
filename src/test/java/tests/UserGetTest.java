@@ -56,6 +56,7 @@ public class UserGetTest extends BaseTestCase {
     @Test
     @Description("This test checks get user data of another user by authorized user")
     @DisplayName("Get user data of another user")
+    @Owner("N.K.")
     @Severity(SeverityLevel.CRITICAL)
     public void testGetUserDataAuthAsOtherUser(){
         Map<String, String> authData = new HashMap<>();

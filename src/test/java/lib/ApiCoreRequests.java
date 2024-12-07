@@ -38,25 +38,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a POST-request")
-    public Response makePostRequest(String url, Map<String, String> authData){
-        return given()
-                .filter(new AllureRestAssured())
-                .body(authData)
-                .post(url)
-                .andReturn();
-    }
-
-    @Step("Make a POST-request for user creating")
-    public Response makePostRequestCreateUser(String url, Map<String, String> userData){
-        return given()
-                .filter(new AllureRestAssured())
-                .body(userData)
-                .post(url)
-                .andReturn();
-    }
-
-    @Step("Make a GET-request with header and  cookie")
+    @Step("Make a GET-request with header and cookie")
     public Response makeGetRequestWithHeaderCookie(String url, String header, String cookie){
         return given()
                 .filter(new AllureRestAssured())
@@ -71,6 +53,15 @@ public class ApiCoreRequests {
         return given()
                 .filter(new AllureRestAssured())
                 .get(url)
+                .andReturn();
+    }
+
+    @Step("Make a POST-request with Body parameters")
+    public Response makePostRequest(String url, Map<String, String> authData){
+        return given()
+                .filter(new AllureRestAssured())
+                .body(authData)
+                .post(url)
                 .andReturn();
     }
 }
