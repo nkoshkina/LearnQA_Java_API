@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-@Epic("User edit cases")
+@Epic("Edit user cases")
 @Feature("Editing")
 @Story("User editing")
 public class UserEditTest extends BaseTestCase {
